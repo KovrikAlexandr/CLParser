@@ -3,8 +3,16 @@
 #include <CLParser/Arguments.hpp>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 namespace CLParser {
+
+/*
+    The function takes a string as an argument, separates it by "space"
+    and returns the vector of received words
+*/
+std::vector<std::string> SplitString(const std::string& str);
+
 
 class Parser {
 public:
@@ -13,9 +21,9 @@ public:
 
     ~Parser();
 
-    bool ParseArguments(int argc, char* argv[]);
+    bool Parse(int argc, char* argv[]);
 
-    bool ParseArguments(const std::vector<std::string>& arguments);
+    bool Parse(const std::vector<std::string>& arguments);
 
     // Single arguments
 

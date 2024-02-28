@@ -1,6 +1,12 @@
 #include <CLParser/CLParser.hpp>
 #include <CLParser/Arguments.hpp>
 
+std::vector<std::string> CLParser::SplitString(const std::string& str) {
+    std::istringstream iss(str);
+
+    return {std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>()};
+}
+
 
 CLParser::Parser::Parser() 
     : m_positional(nullptr)
@@ -147,16 +153,16 @@ bool CLParser::Parser::SetMultiArgument(BaseArgument* base_ptr, const char* valu
     return false;
 }
 
-bool CLParser::Parser::ParseArguments(int argc, char* argv[]) {
-    std::vector<std::string> arguments(argc - 1);
-    for (int arg_idx = 1; arg_idx < argc; arg_idx++) {
+bool CLParser::Parser::Parse(int argc, char* argv[]) {
+    std::vector<std::string> arguments;
+    for (int arg_idx = 0; arg_idx < argc; arg_idx++) {
         arguments.emplace_back(argv[arg_idx]);
     }
 
-    return ParseArguments(arguments);
+    return Parse(arguments);
 }
 
-bool CLParser::Parser::ParseArguments(const std::vector<std::string>& arguments) {
+bool CLParser::Parser::Parse(const std::vector<std::string>& arguments) {
     for (int arg_idx = 1; arg_idx < arguments.size(); arg_idx++) {
         std::string argument(arguments[arg_idx]);
         
